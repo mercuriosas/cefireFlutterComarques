@@ -55,15 +55,106 @@ class ComarquesService {
   }
 
 
-
   static Future<List<dynamic>> obtenirComarques(String provincia) async {
-    // TO-DO
-    return []; // a modificar
+    // Obté la llista de comarques
+    try {
+      String url =
+          "https://node-comarques-rest-server-production.up.railway.app/api/comarques/comarquesAmbImatge/$provincia";
+      var data = await http.get(Uri.parse(url));
+
+      // Preparem la llista de províncies a retornar
+      List<Comarca> llistaComarques = [];
+
+      if (data.statusCode == 200) {
+        // Si hi ha resposta la processem per retornar-la com
+        // a llista de províncies
+
+        String body = utf8.decode(data.bodyBytes);
+        final bodyJSON = jsonDecode(body) as List;
+
+        // Forma 1. Recorrem el JSON i creem la llista de provincies
+        /*for (var comarcaJSON in bodyJSON) {
+          // Amb el constructor per defecte
+          llistaComarques.add(Provincia(
+            nom: comarcaJSON["comarca"],
+            imatge: comarcaJSON["img"],
+          ));
+
+          // Alternativa: Amb el constructor amb nom
+           //llistaProvincies.add(Provincia.fromJSON(provinciaJSON));
+        }*/
+
+        // Forma 2: Fem ús del mapat d'estructures
+        llistaComarques = bodyJSON.map((comarcaJSON) {
+          // Amb el constructor per defecte
+          return Comarca(
+            nom: comarcaJSON["nom"],
+            imatge: comarcaJSON["img"],
+          );
+          // Amb el constructor amb nom
+          //return Provincia.fromJSON(provinciaJSON);
+        }).toList();
+      }
+      // I finalment retornem la llista
+      return llistaComarques;
+    } catch (except) {
+      print(except.toString());
+      return [];
+    }
   }
 
-  static Future<Comarca?> infoComarca(String comarca) async {
-    // TO-DO
-    return Comarca(); // a modificar
+  static Future<List> infoComarca(String comarca) async {
+    // Obté la llista de comarques
+    try {
+      String url =
+          "https://node-comarques-rest-server-production.up.railway.app/api/comarques/infoComarca/$comarca";
+      var data = await http.get(Uri.parse(url));
+
+      // Preparem la llista de províncies a retornar
+      List<Comarca> llistaComarques = [];
+
+      if (data.statusCode == 200) {
+        // Si hi ha resposta la processem per retornar-la com
+        // a llista de províncies
+
+        String body = utf8.decode(data.bodyBytes);
+        final bodyJSON = jsonDecode(body) as List;
+
+        // Forma 1. Recorrem el JSON i creem la llista de provincies
+        /*for (var comarcaJSON in bodyJSON) {
+          // Amb el constructor per defecte
+          llistaComarques.add(Provincia(
+            nom: comarcaJSON["comarca"],
+            imatge: comarcaJSON["img"],
+          ));
+
+          // Alternativa: Amb el constructor amb nom
+           //llistaProvincies.add(Provincia.fromJSON(provinciaJSON));
+        }*/
+
+        // Forma 2: Fem ús del mapat d'estructures
+        llistaComarques = bodyJSON.map((comarcaJSON) {
+          // Amb el constructor per defecte
+          return Comarca(
+            nom: comarcaJSON["nom"],
+            capital: comarcaJSON["capital"],
+            poblacio: comarcaJSON["poblacio"],
+            imatge: comarcaJSON["img"],
+            descripcio: comarcaJSON["desc"],
+            latitud: comarcaJSON["latitud"],
+            longitud: comarcaJSON["longitud"],
+
+          );
+          // Amb el constructor amb nom
+          //return Provincia.fromJSON(provinciaJSON);
+        }).toList();
+      }
+      // I finalment retornem la llista
+      return llistaComarques;
+    } catch (except) {
+      print(except.toString());
+      return [];
+    }
   }
 
 

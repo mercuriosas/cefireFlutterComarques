@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:comarquescli/comarques_service.dart';
 import 'package:comarquescli/provincia.dart';
+import 'package:comarquescli/comarca.dart';
 
 void main(List<String> arguments) {
 
@@ -85,18 +86,38 @@ mostraProvinciesSync() async {
 }
 
 mostraComarques(String provincia) {
-  // TO-DO
-
-  // Obtenir la llista de províncies i mostrar-la per pantalla
-  
-  print("\x1B[35m Funció pendent d'implementació \x1B[0m");
+  // La llista de Comarques vindrà en un Future
+  Future<List> respostaFuture = ComarquesService.obtenirComarques(provincia);
+//print(respostaFuture.toString());
+  // Preparem el callback
+  respostaFuture.then((resposta) {
+    if (resposta.isNotEmpty) {
+      // Recorrem la llista per mostrar els resultats
+      for (var provincia in resposta) {
+        print(provincia.toString());
+      }
+    } else {
+      print("\x1B[31mNo s'ha obtingut cap resposta\x1B[0m");
+    }
+  });
 
 }
 
-mostraInfoComarca(String comarca) {
-  // TO-DO
-
-  print("\x1B[35m Funció pendent d'implementació \x1B[0m");
+mostraInfoComarca(String comarca) async {
+  // La llista de Comarques vindrà en un Future
+  Future<List> respostaFuture = ComarquesService.infoComarca(comarca);
+//print(respostaFuture.toString());
+  // Preparem el callback
+  respostaFuture.then((resposta) {
+    if (resposta.isNotEmpty) {
+      // Recorrem la llista per mostrar els resultats
+      for (var provincia in resposta) {
+        print(provincia.toString());
+      }
+    } else {
+      print("\x1B[31mNo s'ha obtingut cap resposta\x1B[0m");
+    }
+  });
 }
 
 
