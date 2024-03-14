@@ -4,8 +4,8 @@ class Comarca {
   String? capital;
   String? poblacio;
   String? descripcio;
-  String? latitud;
-  String? longitud;
+  double? latitud;
+  double? longitud;
 
   /*
   Constructor amb arguments amb nom:
@@ -29,9 +29,36 @@ class Comarca {
   Comarca.fromJSON(Map<String, dynamic> objecteJSON) {
     nom = objecteJSON["comarca"] ?? "";
     imatge = objecteJSON["img"] ?? "";
+    capital = objecteJSON["capital"] ?? "";
+    poblacio = objecteJSON["poblacio"] ?? "";
+    descripcio = objecteJSON["desc"] ?? "";
+    latitud = objecteJSON["latitud"] ?? "";
+    longitud = objecteJSON["longitud"] ?? "";
   }
-
+  /*
   @override
   String toString() => '''\x1B[34mNom:\t\x1B[36m$nom\x1B[0m
-\x1B[34mImatge:\t\x1B[36m$imatge\n\x1B[0m''';
+\x1B[34mImatge:\t\x1B[36m$imatge\n\x1B[0m
+\x1B[34mCapital:\t\x1B[36m$capital\n\x1B[0m
+\x1B[34mPoblacio:\t\x1B[36m$poblacio\n\x1B[0m
+\x1B[34mDescripcio:\t\x1B[36m$descripcio\n\x1B[0m
+\x1B[34mLatitud:\t\x1B[36m$latitud\n\x1B[0m
+\x1B[34mLongitud:\t\x1B[36m$longitud\n\x1B[0m''';*/
+
+  @override
+  String toString(){
+    if (capital != null){
+      return '''\x1B[34mNom:\t\x1B[36m$nom\x1B[0m
+\x1B[34mImatge:\t\x1B[36m$imatge\n\x1B[0m
+\x1B[34mCapital:\t\x1B[36m$capital\n\x1B[0m
+\x1B[34mPoblacio:\t\x1B[36m$poblacio\n\x1B[0m
+\x1B[34mDescripcio:\t\x1B[36m$descripcio\n\x1B[0m
+\x1B[34mLatitud:\t\x1B[36m$latitud\n\x1B[0m
+\x1B[34mLongitud:\t\x1B[36m$longitud\n\x1B[0m''';
+    }
+    else{
+
+      return '''$nom\x1B[0m''';
+    }
+  }
 }

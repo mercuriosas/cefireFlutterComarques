@@ -103,66 +103,28 @@ class ComarquesService {
     }
   }
 
-  static Future<List> infoComarca(String comarca) async {
-    // Obté la llista de comarques
+  static Future<Comarca?> infoComarca(String comarca) async {
+    // Obté la comarca seleccionada
     try {
       String url =
           "https://node-comarques-rest-server-production.up.railway.app/api/comarques/infoComarca/$comarca";
       var data = await http.get(Uri.parse(url));
-
-      // Preparem la llista de comarques a retornar
-      List<Comarca> llistaComarques = [];
 
       if (data.statusCode == 200) {
         // Si hi ha resposta la processem per retornar-la com
         // a llista de províncies
 
         String body = utf8.decode(data.bodyBytes);
+
         final bodyJSON = jsonDecode(body); //as List;
-        print("Entro en sin error");
+        final datosComarca = Comarca.fromJSON(bodyJSON);
 
-        // Forma 1. Recorrem el JSON i creem la llista de provincies
-        for (var comarcaJSON in bodyJSON) {
-
-          // Amb el constructor per defecte
-          llistaComarques.add(Comarca(
-            nom: comarcaJSON["nom"],
-            capital: comarcaJSON["capital"],
-            poblacio: comarcaJSON["poblacio"],
-            imatge: comarcaJSON["img"],
-            descripcio: comarcaJSON["desc"],
-            latitud: comarcaJSON["latitud"],
-            longitud: comarcaJSON["longitud"],
-          ));
-
-          // Alternativa: Amb el constructor amb nom
-           //llistaProvincies.add(Provincia.fromJSON(provinciaJSON));
-        }
-/*
-        // Forma 2: Fem ús del mapat d'estructures
-        llistaComarques = bodyJSON.map((comarcaJSON) {
-          // Amb el constructor per defecte
-          return Comarca(
-            nom: comarcaJSON["nom"],
-            capital: comarcaJSON["capital"],
-            poblacio: comarcaJSON["poblacio"],
-            imatge: comarcaJSON["img"],
-            descripcio: comarcaJSON["desc"],
-            latitud: comarcaJSON["latitud"],
-            longitud: comarcaJSON["longitud"],
-
-          );
-          // Amb el constructor amb nom
-          //return Provincia.fromJSON(provinciaJSON);
-        }).toList();
-*/
+        return datosComarca;
       }
-
-      // I finalment retornem la llista
-      return llistaComarques;
+      //return null;
     } catch (except) {
       print(except.toString());
-      return [];
+      return null;
     }
   }
 

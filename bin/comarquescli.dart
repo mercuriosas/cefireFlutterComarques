@@ -105,15 +105,13 @@ mostraComarques(String provincia) {
 
 mostraInfoComarca(String comarca) async {
   // La llista de Comarques vindrà en un Future
-  Future<List> respostaFuture = ComarquesService.infoComarca(comarca);
-//print(respostaFuture.toString());
+  Future<Comarca?> respostaFuture = ComarquesService.infoComarca(comarca);
+
   // Preparem el callback
   respostaFuture.then((resposta) {
-    if (resposta.isNotEmpty) {
-      // Recorrem la llista per mostrar els resultats
-      for (var provincia in resposta) {
-        print(provincia.toString());
-      }
+    if (resposta.toString() != 'null') {
+      // mostrem informació de la comarca
+      print(resposta.toString());
     } else {
       print("\x1B[31mNo s'ha obtingut cap resposta\x1B[0m");
     }
