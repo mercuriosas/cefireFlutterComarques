@@ -35,18 +35,10 @@ class Comarca {
     latitud = objecteJSON["latitud"] ?? "";
     longitud = objecteJSON["longitud"] ?? "";
   }
-  /*
-  @override
-  String toString() => '''\x1B[34mNom:\t\x1B[36m$nom\x1B[0m
-\x1B[34mImatge:\t\x1B[36m$imatge\n\x1B[0m
-\x1B[34mCapital:\t\x1B[36m$capital\n\x1B[0m
-\x1B[34mPoblacio:\t\x1B[36m$poblacio\n\x1B[0m
-\x1B[34mDescripcio:\t\x1B[36m$descripcio\n\x1B[0m
-\x1B[34mLatitud:\t\x1B[36m$latitud\n\x1B[0m
-\x1B[34mLongitud:\t\x1B[36m$longitud\n\x1B[0m''';*/
 
   @override
   String toString(){
+    //Si capital té valor estem mostrant la info de la comarca
     if (capital != null){
       return '''\x1B[34mNom:\t\x1B[36m$nom\x1B[0m
 \x1B[34mImatge:\t\x1B[36m$imatge\n\x1B[0m
@@ -57,7 +49,7 @@ class Comarca {
 \x1B[34mLongitud:\t\x1B[36m$longitud\n\x1B[0m''';
     }
     else{
-
+      //Si no té valor, mostrarem només el nom de la comarca
       return '''$nom\x1B[0m''';
     }
   }

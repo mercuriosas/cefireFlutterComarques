@@ -72,18 +72,6 @@ class ComarquesService {
         String body = utf8.decode(data.bodyBytes);
         final bodyJSON = jsonDecode(body) as List;
 
-        // Forma 1. Recorrem el JSON i creem la llista de provincies
-        /*for (var comarcaJSON in bodyJSON) {
-          // Amb el constructor per defecte
-          llistaComarques.add(Provincia(
-            nom: comarcaJSON["comarca"],
-            imatge: comarcaJSON["img"],
-          ));
-
-          // Alternativa: Amb el constructor amb nom
-           //llistaProvincies.add(Provincia.fromJSON(provinciaJSON));
-        }*/
-
         // Forma 2: Fem ús del mapat d'estructures
         llistaComarques = bodyJSON.map((comarcaJSON) {
           // Amb el constructor per defecte
@@ -112,21 +100,18 @@ class ComarquesService {
 
       if (data.statusCode == 200) {
         // Si hi ha resposta la processem per retornar-la com
-        // a llista de províncies
+        // a JSON de comarques
 
         String body = utf8.decode(data.bodyBytes);
 
-        final bodyJSON = jsonDecode(body); //as List;
-        final datosComarca = Comarca.fromJSON(bodyJSON);
+        final bodyJSON = jsonDecode(body);
+        final datosComarca = Comarca.fromJSON(bodyJSON); //Muntem el cos de la variable amb el constructor
 
         return datosComarca;
       }
-      //return null;
     } catch (except) {
       print(except.toString());
       return null;
     }
   }
-
-
 }
